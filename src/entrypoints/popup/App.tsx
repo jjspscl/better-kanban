@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { LayoutGrid, Settings2 } from 'lucide-react';
+import { LayoutGrid, Settings2, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ViewDetector } from '@/components/ViewDetector';
 import { ConfigExporter } from '@/components/ConfigExporter';
@@ -36,6 +36,14 @@ export default function Popup() {
     }
   }
 
+  async function handleReset() {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (tab?.id) {
+      await chrome.tabs.sendMessage(tab.id, { type: 'RESET_VIEW' });
+      window.close();
+    }
+  }
+
   return (
     <div className="w-[380px] space-y-4 p-4">
       <div className="flex items-center gap-2">
@@ -53,10 +61,16 @@ export default function Popup() {
       <ViewDetector context={context} />
 
       {context && (
-        <Button className="w-full" onClick={openManager}>
-          <Settings2 className="mr-2 h-4 w-4" />
-          Open Column Manager
-        </Button>
+        <div className="flex flex-col gap-2">
+          <Button className="w-full" onClick={openManager}>
+            <Settings2 className="mr-2 h-4 w-4" />
+            Open Column Manager
+          </Button>
+          <Button variant="outline" className="w-full" onClick={handleReset}>
+            <RotateCcw className="mr-2 h-4 w-4" />
+            Reset View
+          </Button>
+        </div>
       )}
 
       <ConfigExporter onImport={() => window.location.reload()} />

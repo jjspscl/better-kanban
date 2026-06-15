@@ -22,8 +22,6 @@ import { motion, useDragControls } from 'framer-motion';
 import {
   X,
   Minus,
-  Save,
-  RotateCcw,
   GripVertical,
   Eye,
   EyeOff,
@@ -32,8 +30,8 @@ import {
   AlertTriangle,
   Search,
   Rows3,
+  RefreshCw,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
@@ -44,14 +42,16 @@ interface FloatingPanelProps {
   context: BoardContext;
   columns: ColumnConfig[];
   onChange: (columns: ColumnConfig[]) => void;
-  onSave: () => void;
-  onReset: () => void;
   onMinimize: () => void;
   onClose: () => void;
   counts?: Record<string, number>;
   compactMode?: boolean;
   onToggleCompact?: () => void;
   onFilter?: (query: string) => void;
+  wipEnabled?: boolean;
+  onToggleWip?: () => void;
+  autoRefreshOn403?: boolean;
+  onToggleAutoRefresh?: () => void;
 }
 
 function SortableColumnItem({
@@ -60,12 +60,14 @@ function SortableColumnItem({
   onToggleVisible,
   onToggleCollapsed,
   onWipLimitChange,
+  wipEnabled,
 }: {
   column: ColumnConfig;
   count?: number;
   onToggleVisible: (id: string) => void;
   onToggleCollapsed: (id: string) => void;
   onWipLimitChange?: (id: string, limit: number | undefined) => void;
+  wipEnabled?: boolean;
 }) {
   const {
     attributes,
@@ -88,10 +90,20 @@ function SortableColumnItem({
     count !== undefined &&
     count > column.wipLimit;
 
+  const wipLimitDisplay =
+    column.wipLimit !== undefined && column.wipLimit > 0
+      ? column.wipLimit
+      : '';
+
   return (
     <div
       ref={setNodeRef}
       style={style}
+      title={
+        overWipLimit && count !== undefined && column.wipLimit
+          ? `WIP limit exceeded: ${count} cards / ${column.wipLimit} max`
+          : undefined
+      }
       className={cn(
         'flex items-center gap-2 rounded-md border p-2 shadow-sm',
         isDragging &&
@@ -139,27 +151,29 @@ function SortableColumnItem({
       </div>
 
       <div className="flex items-center gap-1">
-        <div className="flex items-center gap-0.5">
-          <input
-            type="number"
-            min={0}
-            placeholder="∞"
-            value={column.wipLimit ?? ''}
-            onChange={(e) => {
-              const val = e.target.value;
-              if (val === '') {
-                onWipLimitChange?.(column.id, undefined);
-              } else {
-                const n = parseInt(val, 10);
-                if (!isNaN(n) && n >= 0) {
-                  onWipLimitChange?.(column.id, n);
+        {wipEnabled && (
+          <div className="flex items-center gap-0.5">
+            <input
+              type="number"
+              min={0}
+              placeholder="∞"
+              value={wipLimitDisplay}
+              onChange={(e) => {
+                const val = e.target.value;
+                if (val === '') {
+                  onWipLimitChange?.(column.id, undefined);
+                } else {
+                  const n = parseInt(val, 10);
+                  if (!isNaN(n) && n >= 0) {
+                    onWipLimitChange?.(column.id, n);
+                  }
                 }
-              }
-            }}
-            className="h-6 w-10 rounded border border-gray-200 px-1 text-center text-[10px] text-gray-500 outline-none focus:border-blue-400"
-            title="WIP limit"
-          />
-        </div>
+              }}
+              className="h-6 w-10 rounded border border-gray-200 px-1 text-center text-[10px] text-gray-500 outline-none focus:border-blue-400"
+              title="WIP limit (∞ = no limit)"
+            />
+          </div>
+        )}
         <Switch
           id={`fp-visible-${column.id}`}
           checked={column.visible}
@@ -180,16 +194,17 @@ export function FloatingPanel({
   context,
   columns,
   onChange,
-  onSave,
-  onReset,
   onMinimize,
   onClose,
   counts,
   compactMode,
   onToggleCompact,
   onFilter,
+  wipEnabled,
+  onToggleWip,
+  autoRefreshOn403,
+  onToggleAutoRefresh,
 }: FloatingPanelProps) {
-  const [saved, setSaved] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [workingColumns, setWorkingColumns] = useState<ColumnConfig[]>(columns);
   const [filterText, setFilterText] = useState('');
@@ -278,19 +293,13 @@ export function FloatingPanel({
     onMinimize();
   }
 
-  async function handleSave() {
-    await onSave();
-    setSaved(true);
-    setTimeout(() => setSaved(false), 1500);
-  }
-
   const boundsRef = useRef<HTMLDivElement>(null);
 
   return (
     <div
       ref={boundsRef}
       className="sp-kanban-sorter-bounds pointer-events-none fixed"
-      style={{ inset: 32 }}
+      style={{ inset: 16 }}
     >
       <motion.div
         drag
@@ -305,9 +314,9 @@ export function FloatingPanel({
           pointerEvents: 'auto',
           position: 'absolute',
           top: 48,
-          right: 0,
+          right: 16,
         }}
-        className="w-[360px] select-none overflow-hidden rounded-xl border border-gray-200 bg-white text-gray-900 shadow-2xl"
+        className="w-[400px] select-none overflow-hidden rounded-xl border border-gray-200 bg-white text-gray-900 shadow-2xl"
       >
         <div
           className="flex cursor-grab items-center justify-between border-b border-gray-100 bg-gray-50/80 px-4 py-3 active:cursor-grabbing"
@@ -357,7 +366,8 @@ export function FloatingPanel({
 
           <div className="flex items-center justify-between text-xs text-gray-500">
             <span>Drag to reorder</span>
-            <div className="flex gap-3">
+            <div className="flex items-center gap-3">
+              {wipEnabled && <span>WIP</span>}
               <span>Show</span>
               <span>Collapse</span>
             </div>
@@ -399,6 +409,7 @@ export function FloatingPanel({
                       onToggleVisible={toggleVisible}
                       onToggleCollapsed={toggleCollapsed}
                       onWipLimitChange={handleWipLimitChange}
+                      wipEnabled={wipEnabled}
                     />
                   ))}
                 </div>
@@ -407,16 +418,34 @@ export function FloatingPanel({
             </DndContext>
           </ScrollArea>
 
-          <div className="flex gap-2 pt-2">
-            <Button className="flex-1" onClick={handleSave} disabled={saved}>
-              <Save className="mr-2 h-4 w-4" />
-              {saved ? 'Saved!' : 'Save'}
-            </Button>
-            <Button variant="outline" onClick={onReset}>
-              <RotateCcw className="mr-2 h-4 w-4" />
-              Reset
-            </Button>
+          <div className="border-t border-gray-100 pt-3">
+            <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
+              Settings
+            </h4>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <AlertTriangle className="h-4 w-4 shrink-0 text-gray-500" />
+                  <span className="text-sm">WIP Limits</span>
+                </div>
+                <Switch
+                  checked={!!wipEnabled}
+                  onCheckedChange={onToggleWip}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <RefreshCw className="h-4 w-4 shrink-0 text-gray-500" />
+                  <span className="text-sm">Auto-refresh on error</span>
+                </div>
+                <Switch
+                  checked={!!autoRefreshOn403}
+                  onCheckedChange={onToggleAutoRefresh}
+                />
+              </div>
+            </div>
           </div>
+
         </div>
       </motion.div>
     </div>

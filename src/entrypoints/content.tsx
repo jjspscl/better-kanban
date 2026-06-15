@@ -4,9 +4,12 @@ import cssText from '@/assets/content.css?inline';
 import { FloatingPanel } from '@/components/FloatingPanel';
 import { debounce, slugify } from '@/lib/utils';
 import {
+  getGlobalSettings,
+  saveGlobalSettings,
   getViewSettings,
   saveViewSettings,
   type ColumnConfig,
+  type GlobalSettings,
 } from '@/lib/storage';
 import {
   detectColumns,
@@ -35,21 +38,33 @@ export default defineContentScript({
     let isSyncingNativeCollapse = false;
     let compactMode = false;
     let compactStyleEl: HTMLStyleElement | null = null;
+    let wipEnabled = false;
+    let autoRefreshOn403 = false;
     const autoOpenedViews = new Set<string>();
 
     const COMPACT_CSS = `
-      [data-automation-id="board-view"] [role="listitem"],
-      [data-automation-id="board-view"] [class*="board"] [class*="card"],
-      [data-automation-id="board-view"] [class*="board"] [class*="Card"] {
-        padding: 6px 8px !important;
-        min-height: unset !important;
-        margin: 2px 0 !important;
+      .sp-card-label {
+        display: none !important;
       }
-      [data-automation-id="board-view"] [role="listitem"] *,
-      [data-automation-id="board-view"] [class*="board"] [class*="card"] *,
-      [data-automation-id="board-view"] [class*="board"] [class*="Card"] * {
-        font-size: 12px !important;
-        line-height: 1.3 !important;
+      .sp-card-container {
+        margin: 3px 0 !important;
+      }
+      .sp-card-subContainer {
+        padding: 6px 10px !important;
+      }
+      .sp-card-displayColumnContainer,
+      .sp-card-previewColumnContainer {
+        margin: 1px 0 !important;
+        padding: 0 !important;
+      }
+      .sp-card-content,
+      .sp-card-userTitle {
+        font-size: 13px !important;
+        line-height: 1.4 !important;
+      }
+      .sp-card-userThumbnail {
+        width: 20px !important;
+        height: 20px !important;
       }
     `;
 
@@ -58,7 +73,7 @@ export default defineContentScript({
       if (!root) return;
       const normalized = query.toLowerCase().trim();
       const cards = root.querySelectorAll<HTMLElement>(
-        '[aria-label*="Bucket"] [role="listitem"], [aria-label*="Bucket"] [class*="card"], [aria-label*="Bucket"] [class*="Card"]'
+        '.sp-card-container'
       );
       cards.forEach((card) => {
         if (!normalized) {
@@ -72,15 +87,12 @@ export default defineContentScript({
 
     function applyWipWarnings(columns: ColumnConfig[], context: BoardContext) {
       for (const column of columns) {
-        if (!column.visible || column.wipLimit === undefined || column.wipLimit <= 0) {
-          const match = context.columns.find((c) => c.id === column.id);
-          if (match) {
-            match.element.style.removeProperty('box-shadow');
-          }
-          continue;
-        }
         const match = context.columns.find((c) => c.id === column.id);
         if (!match) continue;
+        if (!wipEnabled || !column.visible || column.wipLimit === undefined || column.wipLimit <= 0) {
+          match.element.style.removeProperty('box-shadow');
+          continue;
+        }
         const overLimit = match.count > column.wipLimit;
         match.element.style.setProperty(
           'box-shadow',
@@ -202,11 +214,17 @@ export default defineContentScript({
     async function loadAndApplySettings() {
       if (!currentContext) return;
 
-      const saved = await getViewSettings({
-        siteUrl: currentContext.siteUrl,
-        listName: currentContext.listName,
-        viewId: currentContext.viewId,
-      });
+      const [saved, globalSettings] = await Promise.all([
+        getViewSettings({
+          siteUrl: currentContext.siteUrl,
+          listName: currentContext.listName,
+          viewId: currentContext.viewId,
+        }),
+        getGlobalSettings(),
+      ]);
+
+      wipEnabled = globalSettings.wipEnabled;
+      autoRefreshOn403 = globalSettings.autoRefreshOn403;
 
       if (saved?.columns?.length) {
         columnSettings = saved.columns;
@@ -222,6 +240,25 @@ export default defineContentScript({
       applyColumnSettings(columnSettings);
       syncNativeCollapse(columnSettings);
     }
+
+    const debouncedSave = debounce(async () => {
+      if (!currentContext) return;
+      await saveViewSettings(
+        {
+          siteUrl: currentContext.siteUrl,
+          listName: currentContext.listName,
+          viewId: currentContext.viewId,
+        },
+        columnSettings,
+        compactMode
+      );
+    }, 500);
+
+    window.addEventListener('message', (event) => {
+      if (event.data?.type === 'BETTERKANBAN_403_DETECTED' && autoRefreshOn403) {
+        setTimeout(() => window.location.reload(), 2000);
+      }
+    });
 
     function getShadowHost(): HTMLDivElement {
       if (shadowHost) return shadowHost;
@@ -293,40 +330,37 @@ export default defineContentScript({
           columns={columnSettings}
           counts={counts}
           compactMode={compactMode}
+          wipEnabled={wipEnabled}
           onChange={(columns) => {
             columnSettings = columns;
             applyColumnSettings(columns);
             syncNativeCollapse(columns);
+            debouncedSave();
             renderFloatingPanel();
-          }}
-          onSave={async () => {
-            if (!currentContext) return;
-            await saveViewSettings(
-              {
-                siteUrl: currentContext.siteUrl,
-                listName: currentContext.listName,
-                viewId: currentContext.viewId,
-              },
-              columnSettings,
-              compactMode
-            );
           }}
           onToggleCompact={() => {
             compactMode = !compactMode;
             applyCompactMode(compactMode);
+            debouncedSave();
+            renderFloatingPanel();
+          }}
+          onToggleWip={() => {
+            wipEnabled = !wipEnabled;
+            saveGlobalSettings({ wipEnabled, autoRefreshOn403 });
+            applyColumnSettings(columnSettings);
+            renderFloatingPanel();
+          }}
+          autoRefreshOn403={autoRefreshOn403}
+          onToggleAutoRefresh={() => {
+            autoRefreshOn403 = !autoRefreshOn403;
+            saveGlobalSettings({ wipEnabled, autoRefreshOn403 });
+            if (autoRefreshOn403 && !fetchPatched) {
+              inject403Watcher();
+            }
             renderFloatingPanel();
           }}
           onFilter={(query) => {
             applyCardFilter(query);
-          }}
-          onReset={() => {
-            columnSettings = buildDefaultColumns();
-            compactMode = false;
-            applyCompactMode(false);
-            applyColumnSettings(columnSettings);
-            syncNativeCollapse(columnSettings);
-            applyCardFilter('');
-            renderFloatingPanel();
           }}
           onMinimize={() => {
             applyCardFilter('');
@@ -482,9 +516,17 @@ export default defineContentScript({
 
     chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       if (message.type === 'GET_BOARD_CONTEXT') {
+        const safeContext = currentContext
+          ? {
+              ...currentContext,
+              columns: currentContext.columns.map(
+                ({ element, ...rest }) => rest
+              ),
+            }
+          : null;
         sendResponse({
           success: !!currentContext,
-          context: currentContext,
+          context: safeContext,
         });
         return true;
       }
@@ -497,6 +539,36 @@ export default defineContentScript({
           triggerButton.remove();
           triggerButton = null;
         }
+        sendResponse({ success: true });
+        return true;
+      }
+
+      if (message.type === 'GLOBAL_SETTINGS_CHANGED') {
+        const settings: GlobalSettings = message.settings ?? {
+          wipEnabled: false,
+          autoRefreshOn403: false,
+        };
+        saveGlobalSettings(settings);
+        wipEnabled = settings.wipEnabled;
+        autoRefreshOn403 = settings.autoRefreshOn403;
+        if (autoRefreshOn403 && !fetchPatched) {
+          inject403Watcher();
+        }
+        applyColumnSettings(columnSettings);
+        if (panelOpen) renderFloatingPanel();
+        sendResponse({ success: true });
+        return true;
+      }
+
+      if (message.type === 'RESET_VIEW') {
+        columnSettings = buildDefaultColumns();
+        compactMode = false;
+        applyCompactMode(false);
+        applyColumnSettings(columnSettings);
+        syncNativeCollapse(columnSettings);
+        applyCardFilter('');
+        debouncedSave();
+        if (panelOpen) renderFloatingPanel();
         sendResponse({ success: true });
         return true;
       }

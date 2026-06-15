@@ -4,6 +4,13 @@ export const SCHEMA_VERSION = 'v1';
 export const STORAGE_KEY_PREFIX = 'betterkanban';
 export const STORAGE_META_KEY = `${STORAGE_KEY_PREFIX}::meta`;
 
+export interface GlobalSettings {
+  wipEnabled: boolean;
+  autoRefreshOn403: boolean;
+}
+
+export const GLOBAL_SETTINGS_KEY = `${STORAGE_KEY_PREFIX}::settings`;
+
 export interface ColumnConfig {
   id: string;
   label: string;
@@ -49,13 +56,8 @@ export function buildStorageKey(context: ViewContext): string {
   ].join('::');
 }
 
-async function getStorageArea() {
-  try {
-    await chrome.storage.sync.get(null);
-    return chrome.storage.sync;
-  } catch {
-    return chrome.storage.local;
-  }
+function getStorageArea(): chrome.storage.StorageArea {
+  return chrome.storage.local;
 }
 
 export async function getViewSettings(
@@ -86,6 +88,19 @@ export async function saveViewSettings(
 
   await area.set({ [key]: settings });
   await updateMeta(context, key);
+}
+
+export async function getGlobalSettings(): Promise<GlobalSettings> {
+  const area = await getStorageArea();
+  const result = await area.get(GLOBAL_SETTINGS_KEY);
+  return result[GLOBAL_SETTINGS_KEY] ?? { wipEnabled: false, autoRefreshOn403: false };
+}
+
+export async function saveGlobalSettings(
+  settings: GlobalSettings
+): Promise<void> {
+  const area = await getStorageArea();
+  await area.set({ [GLOBAL_SETTINGS_KEY]: settings });
 }
 
 export async function deleteViewSettings(context: ViewContext): Promise<void> {
@@ -140,7 +155,11 @@ export async function getAllSettings(): Promise<Record<string, ViewSettings>> {
   const all = await area.get(null);
   const result: Record<string, ViewSettings> = {};
   for (const [key, value] of Object.entries(all)) {
-    if (key.startsWith(STORAGE_KEY_PREFIX) && key !== STORAGE_META_KEY) {
+    if (
+      key.startsWith(STORAGE_KEY_PREFIX) &&
+      key !== STORAGE_META_KEY &&
+      key !== GLOBAL_SETTINGS_KEY
+    ) {
       result[key] = value as ViewSettings;
     }
   }
@@ -157,8 +176,11 @@ export async function importSettings(
 export async function clearAllSettings(): Promise<void> {
   const area = await getStorageArea();
   const all = await area.get(null);
-  const keysToRemove = Object.keys(all).filter((key) =>
-    key.startsWith(STORAGE_KEY_PREFIX)
+  const keysToRemove = Object.keys(all).filter(
+    (key) =>
+      key.startsWith(STORAGE_KEY_PREFIX) &&
+      key !== GLOBAL_SETTINGS_KEY &&
+      key !== STORAGE_META_KEY
   );
   await area.remove(keysToRemove);
 }

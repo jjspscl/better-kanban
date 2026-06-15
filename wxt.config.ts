@@ -15,6 +15,11 @@ export default defineConfig({
       '*://*.sharepoint.com/sites/*/lists/*',
       '*://lists.live.com/*',
     ],
+    browser_specific_settings: {
+      gecko: {
+        id: 'betterkanban@anihandigital.com',
+      },
+    },
   },
   autoIcons: {
     baseIconPath: 'public/icon.svg',

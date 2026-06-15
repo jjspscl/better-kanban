@@ -6,7 +6,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { clearAllSettings, getAllSettings, SCHEMA_VERSION } from '@/lib/storage';
+import {
+  clearAllSettings,
+  getAllSettings,
+  importSettings,
+  SCHEMA_VERSION,
+} from '@/lib/storage';
 
 interface ConfigExporterProps {
   onImport?: () => void;
@@ -48,7 +53,7 @@ export function ConfigExporter({ onImport }: ConfigExporterProps) {
         throw new Error('Invalid config file');
       }
       // Could validate schemaVersion here in the future
-      await chrome.storage.sync.set(data.settings);
+      await importSettings(data.settings);
       onImport?.();
     } catch (error) {
       alert('Failed to import config: ' + (error as Error).message);
