@@ -43,7 +43,7 @@ export default function Popup() {
           <LayoutGrid className="h-4 w-4" />
         </div>
         <div>
-          <h1 className="text-base font-semibold">SP Kanban Sorter</h1>
+          <h1 className="text-base font-semibold">BetterKanban</h1>
           <p className="text-xs text-muted-foreground">
             Sort & hide SharePoint board columns
           </p>

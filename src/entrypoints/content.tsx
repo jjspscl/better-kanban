@@ -251,7 +251,7 @@ export default defineContentScript({
       triggerButton = document.createElement('button');
       triggerButton.id = 'sp-kanban-sorter-trigger';
       triggerButton.textContent = '📋';
-      triggerButton.title = 'SP Kanban Sorter';
+      triggerButton.title = 'BetterKanban';
       triggerButton.style.cssText = `
         position: fixed;
         bottom: 24px;

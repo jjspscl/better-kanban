@@ -5,10 +5,16 @@ export default defineConfig({
   entrypointsDir: 'entrypoints',
   modules: ['@wxt-dev/auto-icons'],
   manifest: {
-    name: 'SP Kanban Sorter',
-    description: 'Sort and hide columns in SharePoint/Microsoft Lists board views',
+    name: 'BetterKanban',
+    description: 'Sort, hide, and collapse status columns in SharePoint and Microsoft Lists board views',
     permissions: ['storage', 'activeTab'],
-    host_permissions: ['https://groupidone.sharepoint.com/*Lists/*'],
+    host_permissions: [
+      '*://*.sharepoint.com/*Lists/*',
+      '*://*.sharepoint.com/*lists/*',
+      '*://*.sharepoint.com/sites/*/Lists/*',
+      '*://*.sharepoint.com/sites/*/lists/*',
+      '*://lists.live.com/*',
+    ],
   },
   autoIcons: {
     baseIconPath: 'public/icon.svg',

@@ -1,7 +1,7 @@
 import { slugify } from './utils';
 
 export const SCHEMA_VERSION = 'v1';
-export const STORAGE_KEY_PREFIX = 'sp-kanban-sorter';
+export const STORAGE_KEY_PREFIX = 'betterkanban';
 export const STORAGE_META_KEY = `${STORAGE_KEY_PREFIX}::meta`;
 
 export interface ColumnConfig {

@@ -1,7 +1,7 @@
 {
-  "name": "sp-kanban-sorter",
+  "name": "betterkanban",
   "version": "1.0.0",
-  "description": "Browser extension to sort and hide columns in SharePoint/Microsoft Lists board views",
+  "description": "BetterKanban browser extension for SharePoint and Microsoft Lists board views",
   "type": "module",
   "scripts": {
     "dev": "wxt",
