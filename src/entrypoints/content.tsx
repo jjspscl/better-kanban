@@ -16,7 +16,13 @@ import {
 } from '@/lib/sharepoint';
 
 export default defineContentScript({
-  matches: ['https://groupidone.sharepoint.com/*Lists/*'],
+  matches: [
+    '*://*.sharepoint.com/*Lists/*',
+    '*://*.sharepoint.com/*lists/*',
+    '*://*.sharepoint.com/sites/*/Lists/*',
+    '*://*.sharepoint.com/sites/*/lists/*',
+    '*://lists.live.com/*',
+  ],
   main() {
     let currentContext: BoardContext | null = null;
     let columnSettings: ColumnConfig[] = [];
