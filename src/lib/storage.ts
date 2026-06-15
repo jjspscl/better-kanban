@@ -10,6 +10,7 @@ export interface ColumnConfig {
   visible: boolean;
   collapsed: boolean;
   order: number;
+  wipLimit?: number;
 }
 
 export interface ViewSettings {
@@ -19,6 +20,7 @@ export interface ViewSettings {
   siteUrl: string;
   columns: ColumnConfig[];
   lastUpdated: number;
+  compactMode?: boolean;
 }
 
 export interface StorageMeta {
@@ -67,7 +69,8 @@ export async function getViewSettings(
 
 export async function saveViewSettings(
   context: ViewContext,
-  columns: ColumnConfig[]
+  columns: ColumnConfig[],
+  compactMode?: boolean
 ): Promise<void> {
   const area = await getStorageArea();
   const key = buildStorageKey(context);
@@ -78,6 +81,7 @@ export async function saveViewSettings(
     siteUrl: context.siteUrl,
     columns,
     lastUpdated: Date.now(),
+    compactMode,
   };
 
   await area.set({ [key]: settings });

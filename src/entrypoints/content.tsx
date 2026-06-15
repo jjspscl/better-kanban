@@ -33,7 +33,74 @@ export default defineContentScript({
     let panelOpen = false;
     let panelMinimized = false;
     let isSyncingNativeCollapse = false;
+    let compactMode = false;
+    let compactStyleEl: HTMLStyleElement | null = null;
     const autoOpenedViews = new Set<string>();
+
+    const COMPACT_CSS = `
+      [data-automation-id="board-view"] [role="listitem"],
+      [data-automation-id="board-view"] [class*="board"] [class*="card"],
+      [data-automation-id="board-view"] [class*="board"] [class*="Card"] {
+        padding: 6px 8px !important;
+        min-height: unset !important;
+        margin: 2px 0 !important;
+      }
+      [data-automation-id="board-view"] [role="listitem"] *,
+      [data-automation-id="board-view"] [class*="board"] [class*="card"] *,
+      [data-automation-id="board-view"] [class*="board"] [class*="Card"] * {
+        font-size: 12px !important;
+        line-height: 1.3 !important;
+      }
+    `;
+
+    function applyCardFilter(query: string) {
+      const root = findBoardRoot();
+      if (!root) return;
+      const normalized = query.toLowerCase().trim();
+      const cards = root.querySelectorAll<HTMLElement>(
+        '[aria-label*="Bucket"] [role="listitem"], [aria-label*="Bucket"] [class*="card"], [aria-label*="Bucket"] [class*="Card"]'
+      );
+      cards.forEach((card) => {
+        if (!normalized) {
+          card.style.removeProperty('display');
+          return;
+        }
+        const text = card.textContent?.toLowerCase() ?? '';
+        card.style.setProperty('display', text.includes(normalized) ? '' : 'none', 'important');
+      });
+    }
+
+    function applyWipWarnings(columns: ColumnConfig[], context: BoardContext) {
+      for (const column of columns) {
+        if (!column.visible || column.wipLimit === undefined || column.wipLimit <= 0) {
+          const match = context.columns.find((c) => c.id === column.id);
+          if (match) {
+            match.element.style.removeProperty('box-shadow');
+          }
+          continue;
+        }
+        const match = context.columns.find((c) => c.id === column.id);
+        if (!match) continue;
+        const overLimit = match.count > column.wipLimit;
+        match.element.style.setProperty(
+          'box-shadow',
+          overLimit ? 'inset 4px 0 0 0 #ef4444' : 'none',
+          'important'
+        );
+      }
+    }
+
+    function applyCompactMode(enabled: boolean) {
+      if (enabled && !compactStyleEl) {
+        compactStyleEl = document.createElement('style');
+        compactStyleEl.id = 'betterkanban-compact';
+        compactStyleEl.textContent = COMPACT_CSS;
+        document.head.appendChild(compactStyleEl);
+      } else if (!enabled && compactStyleEl) {
+        compactStyleEl.remove();
+        compactStyleEl = null;
+      }
+    }
 
     function applyColumnSettings(columns: ColumnConfig[]) {
       if (!currentContext) return;
@@ -46,11 +113,14 @@ export default defineContentScript({
         if (!column.visible) {
           el.style.setProperty('display', 'none', 'important');
           el.style.removeProperty('order');
+          el.style.removeProperty('box-shadow');
         } else {
           el.style.removeProperty('display');
           el.style.setProperty('order', String(column.order));
         }
       }
+
+      applyWipWarnings(columns, currentContext);
     }
 
     function findNativeCollapseButton(
@@ -144,6 +214,11 @@ export default defineContentScript({
         columnSettings = buildDefaultColumns();
       }
 
+      if (saved?.compactMode) {
+        compactMode = true;
+        applyCompactMode(true);
+      }
+
       applyColumnSettings(columnSettings);
       syncNativeCollapse(columnSettings);
     }
@@ -207,10 +282,17 @@ export default defineContentScript({
         panelRoot = ReactDOM.createRoot(slot);
       }
 
+      const counts: Record<string, number> = {};
+      for (const col of currentContext.columns) {
+        counts[col.id] = col.count;
+      }
+
       panelRoot.render(
         <FloatingPanel
           context={currentContext}
           columns={columnSettings}
+          counts={counts}
+          compactMode={compactMode}
           onChange={(columns) => {
             columnSettings = columns;
             applyColumnSettings(columns);
@@ -225,22 +307,36 @@ export default defineContentScript({
                 listName: currentContext.listName,
                 viewId: currentContext.viewId,
               },
-              columnSettings
+              columnSettings,
+              compactMode
             );
+          }}
+          onToggleCompact={() => {
+            compactMode = !compactMode;
+            applyCompactMode(compactMode);
+            renderFloatingPanel();
+          }}
+          onFilter={(query) => {
+            applyCardFilter(query);
           }}
           onReset={() => {
             columnSettings = buildDefaultColumns();
+            compactMode = false;
+            applyCompactMode(false);
             applyColumnSettings(columnSettings);
             syncNativeCollapse(columnSettings);
+            applyCardFilter('');
             renderFloatingPanel();
           }}
           onMinimize={() => {
+            applyCardFilter('');
             panelMinimized = true;
             panelOpen = false;
             getPanelSlot().style.display = 'none';
             renderTriggerButton();
           }}
           onClose={() => {
+            applyCardFilter('');
             panelOpen = false;
             panelMinimized = false;
             getPanelSlot().style.display = 'none';

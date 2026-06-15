@@ -29,6 +29,9 @@ import {
   EyeOff,
   Columns3,
   LayoutGrid,
+  AlertTriangle,
+  Search,
+  Rows3,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -45,16 +48,24 @@ interface FloatingPanelProps {
   onReset: () => void;
   onMinimize: () => void;
   onClose: () => void;
+  counts?: Record<string, number>;
+  compactMode?: boolean;
+  onToggleCompact?: () => void;
+  onFilter?: (query: string) => void;
 }
 
 function SortableColumnItem({
   column,
+  count,
   onToggleVisible,
   onToggleCollapsed,
+  onWipLimitChange,
 }: {
   column: ColumnConfig;
+  count?: number;
   onToggleVisible: (id: string) => void;
   onToggleCollapsed: (id: string) => void;
+  onWipLimitChange?: (id: string, limit: number | undefined) => void;
 }) {
   const {
     attributes,
@@ -70,14 +81,24 @@ function SortableColumnItem({
     transition,
   };
 
+  const overWipLimit =
+    column.visible &&
+    column.wipLimit !== undefined &&
+    column.wipLimit > 0 &&
+    count !== undefined &&
+    count > column.wipLimit;
+
   return (
     <div
       ref={setNodeRef}
       style={style}
       className={cn(
-        'flex items-center gap-2 rounded-md border bg-white p-2 shadow-sm',
+        'flex items-center gap-2 rounded-md border p-2 shadow-sm',
         isDragging &&
-          'relative z-50 scale-[1.02] border-blue-500 bg-blue-50 shadow-lg ring-2 ring-blue-200'
+          'relative z-50 scale-[1.02] border-blue-500 bg-blue-50 shadow-lg ring-2 ring-blue-200',
+        overWipLimit
+          ? 'border-red-300 bg-red-50'
+          : 'bg-white'
       )}
     >
       <div
@@ -89,7 +110,7 @@ function SortableColumnItem({
         <GripVertical className="h-4 w-4" />
       </div>
 
-      <div className="flex min-w-0 flex-1 items-center gap-2">
+      <div className="flex min-w-0 flex-1 items-center gap-1.5">
         {column.visible ? (
           column.collapsed ? (
             <Columns3 className="h-4 w-4 shrink-0 text-gray-600" />
@@ -102,9 +123,43 @@ function SortableColumnItem({
         <span className="truncate text-sm font-medium text-gray-900">
           {column.label}
         </span>
+        {count !== undefined && (
+          <span
+            className={cn(
+              'ml-auto text-xs tabular-nums',
+              overWipLimit ? 'font-semibold text-red-600' : 'text-gray-400'
+            )}
+          >
+            {count}
+          </span>
+        )}
+        {overWipLimit && (
+          <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-red-500" />
+        )}
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1">
+        <div className="flex items-center gap-0.5">
+          <input
+            type="number"
+            min={0}
+            placeholder="∞"
+            value={column.wipLimit ?? ''}
+            onChange={(e) => {
+              const val = e.target.value;
+              if (val === '') {
+                onWipLimitChange?.(column.id, undefined);
+              } else {
+                const n = parseInt(val, 10);
+                if (!isNaN(n) && n >= 0) {
+                  onWipLimitChange?.(column.id, n);
+                }
+              }
+            }}
+            className="h-6 w-10 rounded border border-gray-200 px-1 text-center text-[10px] text-gray-500 outline-none focus:border-blue-400"
+            title="WIP limit"
+          />
+        </div>
         <Switch
           id={`fp-visible-${column.id}`}
           checked={column.visible}
@@ -129,10 +184,15 @@ export function FloatingPanel({
   onReset,
   onMinimize,
   onClose,
+  counts,
+  compactMode,
+  onToggleCompact,
+  onFilter,
 }: FloatingPanelProps) {
   const [saved, setSaved] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [workingColumns, setWorkingColumns] = useState<ColumnConfig[]>(columns);
+  const [filterText, setFilterText] = useState('');
   const dragControls = useDragControls();
 
   useEffect(() => {
@@ -198,6 +258,26 @@ export function FloatingPanel({
     onChange(updated);
   }
 
+  function handleWipLimitChange(id: string, limit: number | undefined) {
+    const updated = workingColumns.map((col) =>
+      col.id === id ? { ...col, wipLimit: limit } : col
+    );
+    setWorkingColumns(updated);
+    onChange(updated);
+  }
+
+  function handleClose() {
+    setFilterText('');
+    onFilter?.('');
+    onClose();
+  }
+
+  function handleMinimize() {
+    setFilterText('');
+    onFilter?.('');
+    onMinimize();
+  }
+
   async function handleSave() {
     await onSave();
     setSaved(true);
@@ -239,14 +319,26 @@ export function FloatingPanel({
           </div>
           <div className="flex items-center gap-1">
             <button
-              onClick={onMinimize}
+              onClick={onToggleCompact}
+              className={cn(
+                'rounded-md p-1.5 transition-colors hover:bg-gray-200',
+                compactMode
+                  ? 'bg-blue-100 text-blue-700'
+                  : 'text-gray-500 hover:text-gray-900'
+              )}
+              title={compactMode ? 'Standard view' : 'Compact view'}
+            >
+              <Rows3 className="h-4 w-4" />
+            </button>
+            <button
+              onClick={handleMinimize}
               className="rounded-md p-1.5 text-gray-500 transition-colors hover:bg-gray-200 hover:text-gray-900"
               title="Minimize"
             >
               <Minus className="h-4 w-4" />
             </button>
             <button
-              onClick={onClose}
+              onClick={handleClose}
               className="rounded-md p-1.5 text-gray-500 transition-colors hover:bg-gray-200 hover:text-gray-900"
               title="Close"
             >
@@ -271,7 +363,22 @@ export function FloatingPanel({
             </div>
           </div>
 
-          <ScrollArea className="h-[320px] pr-2">
+          <div className="relative">
+            <Search className="pointer-events-none absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Filter cards..."
+              value={filterText}
+              onChange={(e) => {
+                const val = e.target.value;
+                setFilterText(val);
+                onFilter?.(val);
+              }}
+              className="w-full rounded-md border border-gray-200 py-1.5 pl-7 pr-2 text-xs text-gray-900 placeholder-gray-400 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-300"
+            />
+          </div>
+
+          <ScrollArea className="h-[280px] pr-2">
             <DndContext
               sensors={sensors}
               collisionDetection={closestCenter}
@@ -288,8 +395,10 @@ export function FloatingPanel({
                     <SortableColumnItem
                       key={column.id}
                       column={column}
+                      count={counts?.[column.id]}
                       onToggleVisible={toggleVisible}
                       onToggleCollapsed={toggleCollapsed}
+                      onWipLimitChange={handleWipLimitChange}
                     />
                   ))}
                 </div>
