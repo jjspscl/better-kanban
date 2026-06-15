@@ -1,0 +1,828 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e3]:
+    - button "App launcher" [ref=e6] [cursor=pointer]: 
+    - generic [ref=e12]:
+      - link "Go to Microsoft Lists" [ref=e16] [cursor=pointer]:
+        - /url: https://groupidone-my.sharepoint.com/personal/joshua_pascual_groupid_one/_layouts/15/lists.aspx
+        - generic [ref=e17]: Microsoft Lists
+      - search [ref=e22]:
+        - generic [ref=e23]: 
+        - combobox [ref=e24]
+      - generic [ref=e25]:
+        - button "Provide feedback to Microsoft" [ref=e28] [cursor=pointer]:
+          - generic [ref=e29]: 
+        - button "Settings" [ref=e32] [cursor=pointer]:
+          - generic [ref=e33]: 
+        - button "Help" [ref=e36] [cursor=pointer]:
+          - generic [ref=e37]: 
+    - generic [ref=e38]:
+      - button "Account manager for Joshua Pascual" [ref=e40] [cursor=pointer]:
+        - generic [ref=e48]: JP
+      - generic: 
+  - main [ref=e51]:
+    - menubar [ref=e54]:
+      - generic [ref=e55]:
+        - menuitem "Add new item" [ref=e56] [cursor=pointer]:
+          - generic [ref=e57]:
+            - generic [ref=e58]: 
+            - generic [ref=e59]: Add new item
+        - menuitem "Edit in grid view" [ref=e60] [cursor=pointer]:
+          - generic [ref=e61]:
+            - generic [ref=e62]: 
+            - generic [ref=e63]: Edit in grid view
+        - menuitem "Undo" [disabled] [ref=e64]:
+          - generic [ref=e65]:
+            - generic [ref=e66]: 
+            - generic [ref=e67]: Undo
+        - menuitem "Share" [ref=e68] [cursor=pointer]:
+          - generic [ref=e69]:
+            - generic [ref=e70]: 
+            - generic [ref=e71]: Share
+        - menuitem "Copy link" [ref=e72] [cursor=pointer]:
+          - generic [ref=e73]:
+            - generic [ref=e74]: 
+            - generic [ref=e75]: Copy link
+        - menuitem "Export" [ref=e76] [cursor=pointer]:
+          - generic [ref=e77]:
+            - generic [ref=e78]: 
+            - generic [ref=e79]: Export
+            - generic [ref=e80]: 
+        - menuitem "Workflows" [ref=e81] [cursor=pointer]:
+          - generic [ref=e82]:
+            - img [ref=e84]
+            - generic [ref=e86]: Workflows
+        - menuitem "Integrate" [ref=e87] [cursor=pointer]:
+          - generic [ref=e88]:
+            - generic [ref=e89]: 
+            - generic [ref=e90]: Integrate
+            - generic [ref=e91]: 
+        - menuitem "Excel Import" [ref=e92] [cursor=pointer]:
+          - generic [ref=e93]:
+            - img [ref=e94]
+            - generic [ref=e95]: Excel Import
+        - menuitem "More" [ref=e96] [cursor=pointer]:
+          - generic [ref=e98]: 
+      - generic [ref=e99]:
+        - menuitem "People present in list" [ref=e100] [cursor=pointer]:
+          - menu [ref=e102]:
+            - menuitem "Simon Lowry" [ref=e103]:
+              - generic [ref=e106]:
+                - img "Simon Lowry"
+            - menuitem "Joshua Pascual" [ref=e107]:
+              - generic [ref=e110]:
+                - img "Joshua Pascual"
+            - menuitem "Sajit Venugopal" [ref=e111]:
+              - generic [ref=e114]:
+                - img "Sajit Venugopal"
+            - menuitem "Luisa Paiva" [ref=e115]:
+              - generic [ref=e118]:
+                - img "Luisa Paiva"
+            - menuitem "Tobias Felkl" [ref=e119]:
+              - generic [ref=e122]:
+                - img "Tobias Felkl"
+        - menuitem "Open the details pane" [ref=e123] [cursor=pointer]:
+          - generic [ref=e124]:
+            - generic [ref=e125]: 
+            - generic [ref=e126]: Details
+        - menuitem "Open in site" [ref=e127] [cursor=pointer]:
+          - generic [ref=e129]: 
+    - generic [ref=e130]:
+      - generic [ref=e132]:
+        - button "clipboard" [ref=e133]:
+          - img "clipboard" [ref=e137]
+        - generic [ref=e138]:
+          - link "Shared Metrics AI (SaaS)" [ref=e139] [cursor=pointer]:
+            - /url: https://groupidone.sharepoint.com/sites/SharedMetricsAISaaS
+          - generic [ref=e140]:
+            - heading "Defect Tracker" [level=1] [ref=e141]:
+              - button "Defect Tracker" [ref=e142] [cursor=pointer]
+            - generic [ref=e143]:
+              - checkbox "Favorite this list" [ref=e144]
+              - generic "Favorite this list" [ref=e145] [cursor=pointer]: ☆
+            - 'button "This list is in sync. Last sync: Less than a minute ago." [ref=e146]':
+              - 'img "This list is in sync. Last sync: Less than a minute ago." [ref=e147]': 
+      - generic [ref=e149]:
+        - button "Filter" [ref=e150] [cursor=pointer]:
+          - generic [ref=e151]: 
+        - tablist "List views" [ref=e152]:
+          - tab "All Items" [ref=e153] [cursor=pointer]:
+            - generic [ref=e155]: All Items
+          - tab "My Board" [selected] [ref=e156] [cursor=pointer]:
+            - generic [ref=e157]:
+              - generic [ref=e158]:  *
+              - generic [ref=e159]:
+                - generic [ref=e160]: My Board
+                - generic [ref=e161]: 
+        - button "Add view" [ref=e163] [cursor=pointer]:
+          - generic [ref=e164]:  Add view
+    - tabpanel [ref=e165]:
+      - grid [ref=e167]:
+        - generic [ref=e168]:
+          - generic "Bucket Unassigned items, contains 0 items" [ref=e169]:
+            - generic [ref=e171]:
+              - generic [ref=e172]:
+                - heading "Unassigned items" [level=2] [ref=e173]
+                - heading "(0)" [level=2] [ref=e174]
+              - generic:
+                - button "Collapse bucket Unassigned items" [ref=e175] [cursor=pointer]: 
+                - button "Open context menu for bucket Unassigned items" [ref=e176] [cursor=pointer]: 
+            - generic [ref=e178]: You cannot add items to this bucket as the board is organised by a required field.
+          - generic "Bucket New, contains 0 items" [ref=e179]:
+            - generic [ref=e181]:
+              - generic [ref=e182]:
+                - heading "New" [level=2] [ref=e183]
+                - heading "(0)" [level=2] [ref=e184]
+              - generic [ref=e185]:
+                - button "Collapse bucket New" [ref=e186] [cursor=pointer]: 
+                - button "Open context menu for bucket New" [ref=e187] [cursor=pointer]: 
+                - button "Add a new item to New" [ref=e188] [cursor=pointer]: 
+            - generic [ref=e190]: This bucket is empty or a filter is excluding items from it.
+          - generic "Bucket In Progress, contains 1 items" [ref=e191]:
+            - generic [ref=e193]:
+              - generic [ref=e194]:
+                - heading "In Progress" [level=2] [ref=e195]
+                - heading "(1)" [level=2] [ref=e196]
+              - generic [ref=e197]:
+                - button "Collapse bucket In Progress" [ref=e198] [cursor=pointer]: 
+                - button "Open context menu for bucket In Progress" [ref=e199] [cursor=pointer]: 
+                - button "Add a new item to In Progress" [ref=e200] [cursor=pointer]: 
+            - row "  Assigned To Joshua Pascual Joshua Pascual ID 1764 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Email Template Branding Updates Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e201]:
+              - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1764 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Email Template Branding Updates Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e207] [cursor=pointer]:
+                - generic [ref=e208]:
+                  - checkbox " "
+                  - generic [ref=e209]:
+                    - generic [ref=e210]: 
+                    - generic [ref=e211]: 
+                - generic [ref=e215]:
+                  - generic [ref=e216]:
+                    - paragraph [ref=e217]: Assigned To
+                    - generic [ref=e218]:
+                      - paragraph
+                      - img "Joshua Pascual" [ref=e220]
+                      - generic [ref=e221]: Joshua Pascual
+                  - generic [ref=e222]:
+                    - paragraph [ref=e223]: ID
+                    - heading "1764" [level=3] [ref=e224]
+                  - generic [ref=e225]:
+                    - paragraph [ref=e226]: Metric ID / UI Pages
+                    - button "Opens editor for field Metric ID / UI Pages" [ref=e227]: Branding
+                  - generic [ref=e228]:
+                    - paragraph [ref=e229]: Defect Short Description
+                    - paragraph [ref=e230]: Email Template Branding Updates
+                  - generic [ref=e231]:
+                    - paragraph [ref=e232]: Status
+                    - button "Opens editor for field Status" [ref=e233]:
+                      - generic [ref=e236]: In Progress
+                - generic "Press enter to edit item and press space to toggle item selection"
+          - generic "Bucket Ready for Retesting, contains 0 items" [ref=e238]:
+            - generic [ref=e240]:
+              - generic [ref=e241]:
+                - heading "Ready for Retesting" [level=2] [ref=e242]
+                - heading "(0)" [level=2] [ref=e243]
+              - generic [ref=e244]:
+                - button "Collapse bucket Ready for Retesting" [ref=e245] [cursor=pointer]: 
+                - button "Open context menu for bucket Ready for Retesting" [ref=e246] [cursor=pointer]: 
+                - button "Add a new item to Ready for Retesting" [ref=e247] [cursor=pointer]: 
+            - generic [ref=e249]: This bucket is empty or a filter is excluding items from it.
+          - generic "Bucket Re-Opened, contains 0 items" [ref=e250]:
+            - generic [ref=e252]:
+              - generic [ref=e253]:
+                - heading "Re-Opened" [level=2] [ref=e254]
+                - heading "(0)" [level=2] [ref=e255]
+              - generic [ref=e256]:
+                - button "Collapse bucket Re-Opened" [ref=e257] [cursor=pointer]: 
+                - button "Open context menu for bucket Re-Opened" [ref=e258] [cursor=pointer]: 
+                - button "Add a new item to Re-Opened" [ref=e259] [cursor=pointer]: 
+            - generic [ref=e261]: This bucket is empty or a filter is excluding items from it.
+          - generic "Bucket Duplicate, contains 0 items" [ref=e262]:
+            - generic [ref=e264]:
+              - generic [ref=e265]:
+                - heading "Duplicate" [level=2] [ref=e266]
+                - heading "(0)" [level=2] [ref=e267]
+              - generic [ref=e268]:
+                - button "Collapse bucket Duplicate" [ref=e269] [cursor=pointer]: 
+                - button "Open context menu for bucket Duplicate" [ref=e270] [cursor=pointer]: 
+                - button "Add a new item to Duplicate" [ref=e271] [cursor=pointer]: 
+            - generic [ref=e273]: This bucket is empty or a filter is excluding items from it.
+          - generic "Bucket Closed, contains 4 items" [ref=e274]:
+            - generic [ref=e276]:
+              - generic [ref=e277]:
+                - heading "Closed" [level=2] [ref=e278]
+                - heading "(4)" [level=2] [ref=e279]
+              - generic [ref=e280]:
+                - button "Collapse bucket Closed" [ref=e281] [cursor=pointer]: 
+                - button "Open context menu for bucket Closed" [ref=e282] [cursor=pointer]: 
+                - button "Add a new item to Closed" [ref=e283] [cursor=pointer]: 
+            - row [ref=e284]:
+              - generic [ref=e289]:
+                - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1743 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Phase 2 - Help and Support Updates Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e290] [cursor=pointer]:
+                  - generic [ref=e291]:
+                    - checkbox " "
+                    - generic [ref=e292]:
+                      - generic [ref=e293]: 
+                      - generic [ref=e294]: 
+                  - generic [ref=e298]:
+                    - generic [ref=e299]:
+                      - paragraph [ref=e300]: Assigned To
+                      - generic [ref=e301]:
+                        - paragraph
+                        - img "Joshua Pascual" [ref=e303]
+                        - generic [ref=e304]: Joshua Pascual
+                    - generic [ref=e305]:
+                      - paragraph [ref=e306]: ID
+                      - heading "1743" [level=3] [ref=e307]
+                    - generic [ref=e308]:
+                      - paragraph [ref=e309]: Metric ID / UI Pages
+                      - button "Opens editor for field Metric ID / UI Pages" [ref=e310]: Branding
+                    - generic [ref=e311]:
+                      - paragraph [ref=e312]: Defect Short Description
+                      - paragraph [ref=e313]: Phase 2 - Help and Support Updates
+                    - generic [ref=e314]:
+                      - paragraph [ref=e315]: Status
+                      - button "Opens editor for field Status" [ref=e316]:
+                        - generic [ref=e319]: Closed
+                  - generic "Press enter to edit item and press space to toggle item selection"
+                - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1783 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Subscription Management Updates Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e320] [cursor=pointer]:
+                  - generic [ref=e321]:
+                    - checkbox " "
+                    - generic [ref=e322]:
+                      - generic [ref=e323]: 
+                      - generic [ref=e324]: 
+                  - generic [ref=e328]:
+                    - generic [ref=e329]:
+                      - paragraph [ref=e330]: Assigned To
+                      - generic [ref=e331]:
+                        - paragraph
+                        - img "Joshua Pascual" [ref=e333]
+                        - generic [ref=e334]: Joshua Pascual
+                    - generic [ref=e335]:
+                      - paragraph [ref=e336]: ID
+                      - heading "1783" [level=3] [ref=e337]
+                    - generic [ref=e338]:
+                      - paragraph [ref=e339]: Metric ID / UI Pages
+                      - button "Opens editor for field Metric ID / UI Pages" [ref=e340]: Branding
+                    - generic [ref=e341]:
+                      - paragraph [ref=e342]: Defect Short Description
+                      - paragraph [ref=e343]: Subscription Management Updates
+                    - generic [ref=e344]:
+                      - paragraph [ref=e345]: Status
+                      - button "Opens editor for field Status" [ref=e346]:
+                        - generic [ref=e349]: Closed
+                  - generic "Press enter to edit item and press space to toggle item selection"
+                - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1863 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Diagnostics & Analytics Updates Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e350] [cursor=pointer]:
+                  - generic [ref=e351]:
+                    - checkbox " "
+                    - generic [ref=e352]:
+                      - generic [ref=e353]: 
+                      - generic [ref=e354]: 
+                  - generic [ref=e358]:
+                    - generic [ref=e359]:
+                      - paragraph [ref=e360]: Assigned To
+                      - generic [ref=e361]:
+                        - paragraph
+                        - img "Joshua Pascual" [ref=e363]
+                        - generic [ref=e364]: Joshua Pascual
+                    - generic [ref=e365]:
+                      - paragraph [ref=e366]: ID
+                      - heading "1863" [level=3] [ref=e367]
+                    - generic [ref=e368]:
+                      - paragraph [ref=e369]: Metric ID / UI Pages
+                      - button "Opens editor for field Metric ID / UI Pages" [ref=e370]: Branding
+                    - generic [ref=e371]:
+                      - paragraph [ref=e372]: Defect Short Description
+                      - paragraph [ref=e373]: Diagnostics & Analytics Updates
+                    - generic [ref=e374]:
+                      - paragraph [ref=e375]: Status
+                      - button "Opens editor for field Status" [ref=e376]:
+                        - generic [ref=e379]: Closed
+                  - generic "Press enter to edit item and press space to toggle item selection"
+                - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1899 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Ingestion Management - File Upload Processing Icon Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e380] [cursor=pointer]:
+                  - generic [ref=e381]:
+                    - checkbox " "
+                    - generic [ref=e382]:
+                      - generic [ref=e383]: 
+                      - generic [ref=e384]: 
+                  - generic [ref=e388]:
+                    - generic [ref=e389]:
+                      - paragraph [ref=e390]: Assigned To
+                      - generic [ref=e391]:
+                        - paragraph
+                        - img "Joshua Pascual" [ref=e393]
+                        - generic [ref=e394]: Joshua Pascual
+                    - generic [ref=e395]:
+                      - paragraph [ref=e396]: ID
+                      - heading "1899" [level=3] [ref=e397]
+                    - generic [ref=e398]:
+                      - paragraph [ref=e399]: Metric ID / UI Pages
+                      - button "Opens editor for field Metric ID / UI Pages" [ref=e400]: Branding
+                    - generic [ref=e401]:
+                      - paragraph [ref=e402]: Defect Short Description
+                      - paragraph [ref=e403]: Ingestion Management - File Upload Processing Icon
+                    - generic [ref=e404]:
+                      - paragraph [ref=e405]: Status
+                      - button "Opens editor for field Status" [ref=e406]:
+                        - generic [ref=e409]: Closed
+                  - generic "Press enter to edit item and press space to toggle item selection"
+          - generic "Bucket Failed Testing, contains 1 items" [ref=e411]:
+            - generic [ref=e413]:
+              - generic [ref=e414]:
+                - heading "Failed Testing" [level=2] [ref=e415]
+                - heading "(1)" [level=2] [ref=e416]
+              - generic [ref=e417]:
+                - button "Collapse bucket Failed Testing" [ref=e418] [cursor=pointer]: 
+                - button "Open context menu for bucket Failed Testing" [ref=e419] [cursor=pointer]: 
+                - button "Add a new item to Failed Testing" [ref=e420] [cursor=pointer]: 
+            - row "  Assigned To Joshua Pascual Joshua Pascual ID 411 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Tab - Hover Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e421]:
+              - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 411 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Tab - Hover Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e427] [cursor=pointer]:
+                - generic [ref=e428]:
+                  - checkbox " "
+                  - generic [ref=e429]:
+                    - generic [ref=e430]: 
+                    - generic [ref=e431]: 
+                - generic [ref=e435]:
+                  - generic [ref=e436]:
+                    - paragraph [ref=e437]: Assigned To
+                    - generic [ref=e438]:
+                      - paragraph
+                      - img "Joshua Pascual" [ref=e440]
+                      - generic [ref=e441]: Joshua Pascual
+                  - generic [ref=e442]:
+                    - paragraph [ref=e443]: ID
+                    - heading "411" [level=3] [ref=e444]
+                  - generic [ref=e445]:
+                    - paragraph [ref=e446]: Metric ID / UI Pages
+                    - button "Opens editor for field Metric ID / UI Pages" [ref=e447]: Dark Mode
+                  - generic [ref=e448]:
+                    - paragraph [ref=e449]: Defect Short Description
+                    - paragraph [ref=e450]: Tab - Hover
+                  - generic [ref=e451]:
+                    - paragraph [ref=e452]: Status
+                    - button "Opens editor for field Status" [ref=e453]:
+                      - generic [ref=e456]: Failed Testing
+                - generic "Press enter to edit item and press space to toggle item selection"
+          - generic "Bucket Assigned, contains 12 items" [ref=e458]:
+            - generic [ref=e460]:
+              - generic [ref=e461]:
+                - heading "Assigned" [level=2] [ref=e462]
+                - heading "(12)" [level=2] [ref=e463]
+              - generic [ref=e464]:
+                - button "Collapse bucket Assigned" [ref=e465] [cursor=pointer]: 
+                - button "Open context menu for bucket Assigned" [ref=e466] [cursor=pointer]: 
+                - button "Add a new item to Assigned" [ref=e467] [cursor=pointer]: 
+            - row [ref=e468]:
+              - generic [ref=e471]:
+                - generic [ref=e473]:
+                  - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1813 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Homepage – Sentence case Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e474] [cursor=pointer]:
+                    - generic [ref=e475]:
+                      - checkbox " "
+                      - generic [ref=e476]:
+                        - generic [ref=e477]: 
+                        - generic [ref=e478]: 
+                    - generic [ref=e482]:
+                      - generic [ref=e483]:
+                        - paragraph [ref=e484]: Assigned To
+                        - generic [ref=e485]:
+                          - paragraph
+                          - img "Joshua Pascual" [ref=e487]
+                          - generic [ref=e488]: Joshua Pascual
+                      - generic [ref=e489]:
+                        - paragraph [ref=e490]: ID
+                        - heading "1813" [level=3] [ref=e491]
+                      - generic [ref=e492]:
+                        - paragraph [ref=e493]: Metric ID / UI Pages
+                        - button "Opens editor for field Metric ID / UI Pages" [ref=e494]: Branding
+                      - generic [ref=e495]:
+                        - paragraph [ref=e496]: Defect Short Description
+                        - paragraph [ref=e497]: Homepage – Sentence case
+                      - generic [ref=e498]:
+                        - paragraph [ref=e499]: Status
+                        - button "Opens editor for field Status" [ref=e500]:
+                          - generic [ref=e503]: Assigned
+                    - generic "Press enter to edit item and press space to toggle item selection"
+                  - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1815 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Ingestion management – View dataset details (standard and custom) – read only fields look disabled Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e504] [cursor=pointer]:
+                    - generic [ref=e505]:
+                      - checkbox " "
+                      - generic [ref=e506]:
+                        - generic [ref=e507]: 
+                        - generic [ref=e508]: 
+                    - generic [ref=e512]:
+                      - generic [ref=e513]:
+                        - paragraph [ref=e514]: Assigned To
+                        - generic [ref=e515]:
+                          - paragraph
+                          - img "Joshua Pascual" [ref=e517]
+                          - generic [ref=e518]: Joshua Pascual
+                      - generic [ref=e519]:
+                        - paragraph [ref=e520]: ID
+                        - heading "1815" [level=3] [ref=e521]
+                      - generic [ref=e522]:
+                        - paragraph [ref=e523]: Metric ID / UI Pages
+                        - button "Opens editor for field Metric ID / UI Pages" [ref=e524]: Branding
+                      - generic [ref=e525]:
+                        - paragraph [ref=e526]: Defect Short Description
+                        - paragraph [ref=e527]: Ingestion management – View dataset details (standard and custom) – read only fields look disabled
+                      - generic [ref=e528]:
+                        - paragraph [ref=e529]: Status
+                        - button "Opens editor for field Status" [ref=e530]:
+                          - generic [ref=e533]: Assigned
+                    - generic "Press enter to edit item and press space to toggle item selection"
+                  - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1816 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Ingestion management – Fields tab – bottom padding should be the same from ingestion management Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e534] [cursor=pointer]:
+                    - generic [ref=e535]:
+                      - checkbox " "
+                      - generic [ref=e536]:
+                        - generic [ref=e537]: 
+                        - generic [ref=e538]: 
+                    - generic [ref=e542]:
+                      - generic [ref=e543]:
+                        - paragraph [ref=e544]: Assigned To
+                        - generic [ref=e545]:
+                          - paragraph
+                          - img "Joshua Pascual" [ref=e547]
+                          - generic [ref=e548]: Joshua Pascual
+                      - generic [ref=e549]:
+                        - paragraph [ref=e550]: ID
+                        - heading "1816" [level=3] [ref=e551]
+                      - generic [ref=e552]:
+                        - paragraph [ref=e553]: Metric ID / UI Pages
+                        - button "Opens editor for field Metric ID / UI Pages" [ref=e554]: Branding
+                      - generic [ref=e555]:
+                        - paragraph [ref=e556]: Defect Short Description
+                        - paragraph [ref=e557]: Ingestion management – Fields tab – bottom padding should be the same from ingestion management
+                      - generic [ref=e558]:
+                        - paragraph [ref=e559]: Status
+                        - button "Opens editor for field Status" [ref=e560]:
+                          - generic [ref=e563]: Assigned
+                    - generic "Press enter to edit item and press space to toggle item selection"
+                  - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1817 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Ingestion management – Page name should be \"Ingestion management\" Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e564] [cursor=pointer]:
+                    - generic [ref=e565]:
+                      - checkbox " "
+                      - generic [ref=e566]:
+                        - generic [ref=e567]: 
+                        - generic [ref=e568]: 
+                    - generic [ref=e572]:
+                      - generic [ref=e573]:
+                        - paragraph [ref=e574]: Assigned To
+                        - generic [ref=e575]:
+                          - paragraph
+                          - img "Joshua Pascual" [ref=e577]
+                          - generic [ref=e578]: Joshua Pascual
+                      - generic [ref=e579]:
+                        - paragraph [ref=e580]: ID
+                        - heading "1817" [level=3] [ref=e581]
+                      - generic [ref=e582]:
+                        - paragraph [ref=e583]: Metric ID / UI Pages
+                        - button "Opens editor for field Metric ID / UI Pages" [ref=e584]: Branding
+                      - generic [ref=e585]:
+                        - paragraph [ref=e586]: Defect Short Description
+                        - paragraph [ref=e587]: Ingestion management – Page name should be "Ingestion management"
+                      - generic [ref=e588]:
+                        - paragraph [ref=e589]: Status
+                        - button "Opens editor for field Status" [ref=e590]:
+                          - generic [ref=e593]: Assigned
+                    - generic "Press enter to edit item and press space to toggle item selection"
+                  - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1818 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Ingestion management – View custom dataset Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e594] [cursor=pointer]:
+                    - generic [ref=e595]:
+                      - checkbox " "
+                      - generic [ref=e596]:
+                        - generic [ref=e597]: 
+                        - generic [ref=e598]: 
+                    - generic [ref=e602]:
+                      - generic [ref=e603]:
+                        - paragraph [ref=e604]: Assigned To
+                        - generic [ref=e605]:
+                          - paragraph
+                          - img "Joshua Pascual" [ref=e607]
+                          - generic [ref=e608]: Joshua Pascual
+                      - generic [ref=e609]:
+                        - paragraph [ref=e610]: ID
+                        - heading "1818" [level=3] [ref=e611]
+                      - generic [ref=e612]:
+                        - paragraph [ref=e613]: Metric ID / UI Pages
+                        - button "Opens editor for field Metric ID / UI Pages" [ref=e614]: Branding
+                      - generic [ref=e615]:
+                        - paragraph [ref=e616]: Defect Short Description
+                        - paragraph [ref=e617]: Ingestion management – View custom dataset
+                      - generic [ref=e618]:
+                        - paragraph [ref=e619]: Status
+                        - button "Opens editor for field Status" [ref=e620]:
+                          - generic [ref=e623]: Assigned
+                    - generic "Press enter to edit item and press space to toggle item selection"
+                  - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1820 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Ingestion management – Define dataset fields (drawer) – Fields header should be sticky Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e624] [cursor=pointer]:
+                    - generic [ref=e625]:
+                      - checkbox " "
+                      - generic [ref=e626]:
+                        - generic [ref=e627]: 
+                        - generic [ref=e628]: 
+                    - generic [ref=e632]:
+                      - generic [ref=e633]:
+                        - paragraph [ref=e634]: Assigned To
+                        - generic [ref=e635]:
+                          - paragraph
+                          - img "Joshua Pascual" [ref=e637]
+                          - generic [ref=e638]: Joshua Pascual
+                      - generic [ref=e639]:
+                        - paragraph [ref=e640]: ID
+                        - heading "1820" [level=3] [ref=e641]
+                      - generic [ref=e642]:
+                        - paragraph [ref=e643]: Metric ID / UI Pages
+                        - button "Opens editor for field Metric ID / UI Pages" [ref=e644]: Branding
+                      - generic [ref=e645]:
+                        - paragraph [ref=e646]: Defect Short Description
+                        - paragraph [ref=e647]: Ingestion management – Define dataset fields (drawer) – Fields header should be sticky
+                      - generic [ref=e648]:
+                        - paragraph [ref=e649]: Status
+                        - button "Opens editor for field Status" [ref=e650]:
+                          - generic [ref=e653]: Assigned
+                    - generic "Press enter to edit item and press space to toggle item selection"
+                  - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1821 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Ingestion management – Define dataset fields (drawer) – Align \"Add field\" to input field, not order indicator Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e654] [cursor=pointer]:
+                    - generic [ref=e655]:
+                      - checkbox " "
+                      - generic [ref=e656]:
+                        - generic [ref=e657]: 
+                        - generic [ref=e658]: 
+                    - generic [ref=e662]:
+                      - generic [ref=e663]:
+                        - paragraph [ref=e664]: Assigned To
+                        - generic [ref=e665]:
+                          - paragraph
+                          - img "Joshua Pascual" [ref=e667]
+                          - generic [ref=e668]: Joshua Pascual
+                      - generic [ref=e669]:
+                        - paragraph [ref=e670]: ID
+                        - heading "1821" [level=3] [ref=e671]
+                      - generic [ref=e672]:
+                        - paragraph [ref=e673]: Metric ID / UI Pages
+                        - button "Opens editor for field Metric ID / UI Pages" [ref=e674]: Branding
+                      - generic [ref=e675]:
+                        - paragraph [ref=e676]: Defect Short Description
+                        - paragraph [ref=e677]: Ingestion management – Define dataset fields (drawer) – Align "Add field" to input field, not order indicator
+                      - generic [ref=e678]:
+                        - paragraph [ref=e679]: Status
+                        - button "Opens editor for field Status" [ref=e680]:
+                          - generic [ref=e683]: Assigned
+                    - generic "Press enter to edit item and press space to toggle item selection"
+                  - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1836 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Metric Management – Edit metric – Metric details inputs should be read only, they look disabled Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e684] [cursor=pointer]:
+                    - generic [ref=e685]:
+                      - checkbox " "
+                      - generic [ref=e686]:
+                        - generic [ref=e687]: 
+                        - generic [ref=e688]: 
+                    - generic [ref=e692]:
+                      - generic [ref=e693]:
+                        - paragraph [ref=e694]: Assigned To
+                        - generic [ref=e695]:
+                          - paragraph
+                          - img "Joshua Pascual" [ref=e697]
+                          - generic [ref=e698]: Joshua Pascual
+                      - generic [ref=e699]:
+                        - paragraph [ref=e700]: ID
+                        - heading "1836" [level=3] [ref=e701]
+                      - generic [ref=e702]:
+                        - paragraph [ref=e703]: Metric ID / UI Pages
+                        - button "Opens editor for field Metric ID / UI Pages" [ref=e704]: Branding
+                      - generic [ref=e705]:
+                        - paragraph [ref=e706]: Defect Short Description
+                        - paragraph [ref=e707]: Metric Management – Edit metric – Metric details inputs should be read only, they look disabled
+                      - generic [ref=e708]:
+                        - paragraph [ref=e709]: Status
+                        - button "Opens editor for field Status" [ref=e710]:
+                          - generic [ref=e713]: Assigned
+                    - generic "Press enter to edit item and press space to toggle item selection"
+                  - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1837 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Metric management – Edit metric – Description seems to have extra padding top Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e714] [cursor=pointer]:
+                    - generic [ref=e715]:
+                      - checkbox " "
+                      - generic [ref=e716]:
+                        - generic [ref=e717]: 
+                        - generic [ref=e718]: 
+                    - generic [ref=e722]:
+                      - generic [ref=e723]:
+                        - paragraph [ref=e724]: Assigned To
+                        - generic [ref=e725]:
+                          - paragraph
+                          - img "Joshua Pascual" [ref=e727]
+                          - generic [ref=e728]: Joshua Pascual
+                      - generic [ref=e729]:
+                        - paragraph [ref=e730]: ID
+                        - heading "1837" [level=3] [ref=e731]
+                      - generic [ref=e732]:
+                        - paragraph [ref=e733]: Metric ID / UI Pages
+                        - button "Opens editor for field Metric ID / UI Pages" [ref=e734]: Branding
+                      - generic [ref=e735]:
+                        - paragraph [ref=e736]: Defect Short Description
+                        - paragraph [ref=e737]: Metric management – Edit metric – Description seems to have extra padding top
+                      - generic [ref=e738]:
+                        - paragraph [ref=e739]: Status
+                        - button "Opens editor for field Status" [ref=e740]:
+                          - generic [ref=e743]: Assigned
+                    - generic "Press enter to edit item and press space to toggle item selection"
+                  - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1872 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Font size for the items in the highlight Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e744] [cursor=pointer]:
+                    - generic [ref=e745]:
+                      - checkbox " "
+                      - generic [ref=e746]:
+                        - generic [ref=e747]: 
+                        - generic [ref=e748]: 
+                    - generic [ref=e752]:
+                      - generic [ref=e753]:
+                        - paragraph [ref=e754]: Assigned To
+                        - generic [ref=e755]:
+                          - paragraph
+                          - img "Joshua Pascual" [ref=e757]
+                          - generic [ref=e758]: Joshua Pascual
+                      - generic [ref=e759]:
+                        - paragraph [ref=e760]: ID
+                        - heading "1872" [level=3] [ref=e761]
+                      - generic [ref=e762]:
+                        - paragraph [ref=e763]: Metric ID / UI Pages
+                        - button "Opens editor for field Metric ID / UI Pages" [ref=e764]: UI - Homepage
+                      - generic [ref=e765]:
+                        - paragraph [ref=e766]: Defect Short Description
+                        - paragraph [ref=e767]: Font size for the items in the highlight
+                      - generic [ref=e768]:
+                        - paragraph [ref=e769]: Status
+                        - button "Opens editor for field Status" [ref=e770]:
+                          - generic [ref=e773]: Assigned
+                    - generic "Press enter to edit item and press space to toggle item selection"
+                - generic [ref=e775]:
+                  - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1873 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Trend percentages not fitting in the box Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e776] [cursor=pointer]:
+                    - generic [ref=e777]:
+                      - checkbox " "
+                      - generic [ref=e778]:
+                        - generic [ref=e779]: 
+                        - generic [ref=e780]: 
+                    - generic [ref=e784]:
+                      - generic [ref=e785]:
+                        - paragraph [ref=e786]: Assigned To
+                        - generic [ref=e787]:
+                          - paragraph
+                          - img "Joshua Pascual" [ref=e789]
+                          - generic [ref=e790]: Joshua Pascual
+                      - generic [ref=e791]:
+                        - paragraph [ref=e792]: ID
+                        - heading "1873" [level=3] [ref=e793]
+                      - generic [ref=e794]:
+                        - paragraph [ref=e795]: Metric ID / UI Pages
+                        - button "Opens editor for field Metric ID / UI Pages" [ref=e796]: UI - Homepage
+                      - generic [ref=e797]:
+                        - paragraph [ref=e798]: Defect Short Description
+                        - paragraph [ref=e799]: Trend percentages not fitting in the box
+                      - generic [ref=e800]:
+                        - paragraph [ref=e801]: Status
+                        - button "Opens editor for field Status" [ref=e802]:
+                          - generic [ref=e805]: Assigned
+                    - generic "Press enter to edit item and press space to toggle item selection"
+                  - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1882 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description Add a Submit button to the Edit metric configuration Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e806] [cursor=pointer]:
+                    - generic [ref=e807]:
+                      - checkbox " "
+                      - generic [ref=e808]:
+                        - generic [ref=e809]: 
+                        - generic [ref=e810]: 
+                    - generic [ref=e814]:
+                      - generic [ref=e815]:
+                        - paragraph [ref=e816]: Assigned To
+                        - generic [ref=e817]:
+                          - paragraph
+                          - img "Joshua Pascual" [ref=e819]
+                          - generic [ref=e820]: Joshua Pascual
+                      - generic [ref=e821]:
+                        - paragraph [ref=e822]: ID
+                        - heading "1882" [level=3] [ref=e823]
+                      - generic [ref=e824]:
+                        - paragraph [ref=e825]: Metric ID / UI Pages
+                        - button "Opens editor for field Metric ID / UI Pages" [ref=e826]: UI - Metric Management
+                      - generic [ref=e827]:
+                        - paragraph [ref=e828]: Defect Short Description
+                        - paragraph [ref=e829]: Add a Submit button to the Edit metric configuration
+                      - generic [ref=e830]:
+                        - paragraph [ref=e831]: Status
+                        - button "Opens editor for field Status" [ref=e832]:
+                          - generic [ref=e835]: Assigned
+                    - generic "Press enter to edit item and press space to toggle item selection"
+          - generic "Bucket On Hold, contains 0 items" [ref=e837]:
+            - generic [ref=e839]:
+              - generic [ref=e840]:
+                - heading "On Hold" [level=2] [ref=e841]
+                - heading "(0)" [level=2] [ref=e842]
+              - generic [ref=e843]:
+                - button "Collapse bucket On Hold" [ref=e844] [cursor=pointer]: 
+                - button "Open context menu for bucket On Hold" [ref=e845] [cursor=pointer]: 
+                - button "Add a new item to On Hold" [ref=e846] [cursor=pointer]: 
+            - generic [ref=e848]: This bucket is empty or a filter is excluding items from it.
+          - generic "Bucket Under Review, contains 4 items" [ref=e849]:
+            - generic [ref=e851]:
+              - generic [ref=e852]:
+                - heading "Under Review" [level=2] [ref=e853]
+                - heading "(4)" [level=2] [ref=e854]
+              - generic [ref=e855]:
+                - button "Collapse bucket Under Review" [ref=e856] [cursor=pointer]: 
+                - button "Open context menu for bucket Under Review" [ref=e857] [cursor=pointer]: 
+                - button "Add a new item to Under Review" [ref=e858] [cursor=pointer]: 
+            - row [ref=e859]:
+              - generic [ref=e864]:
+                - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 430 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description On login - Loading user Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e865] [cursor=pointer]:
+                  - generic [ref=e866]:
+                    - checkbox " "
+                    - generic [ref=e867]:
+                      - generic [ref=e868]: 
+                      - generic [ref=e869]: 
+                  - generic [ref=e873]:
+                    - generic [ref=e874]:
+                      - paragraph [ref=e875]: Assigned To
+                      - generic [ref=e876]:
+                        - paragraph
+                        - img "Joshua Pascual" [ref=e878]
+                        - generic [ref=e879]: Joshua Pascual
+                    - generic [ref=e880]:
+                      - paragraph [ref=e881]: ID
+                      - heading "430" [level=3] [ref=e882]
+                    - generic [ref=e883]:
+                      - paragraph [ref=e884]: Metric ID / UI Pages
+                      - button "Opens editor for field Metric ID / UI Pages" [ref=e885]: UI - Homepage
+                    - generic [ref=e886]:
+                      - paragraph [ref=e887]: Defect Short Description
+                      - paragraph [ref=e888]: On login - Loading user
+                    - generic [ref=e889]:
+                      - paragraph [ref=e890]: Status
+                      - button "Opens editor for field Status" [ref=e891]:
+                        - generic [ref=e894]: Under Review
+                  - generic "Press enter to edit item and press space to toggle item selection"
+                - gridcell "  Assigned To Joshua Pascual Jamie Li ID 1796 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description UI - Global Components - Embed typography files Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e895] [cursor=pointer]:
+                  - generic [ref=e896]:
+                    - checkbox " "
+                    - generic [ref=e897]:
+                      - generic [ref=e898]: 
+                      - generic [ref=e899]: 
+                  - generic [ref=e903]:
+                    - generic [ref=e904]:
+                      - paragraph [ref=e905]: Assigned To
+                      - generic [ref=e906]:
+                        - paragraph
+                        - img "Joshua Pascual" [ref=e908]
+                        - img "Jamie Li" [ref=e910]
+                    - generic [ref=e911]:
+                      - paragraph [ref=e912]: ID
+                      - heading "1796" [level=3] [ref=e913]
+                    - generic [ref=e914]:
+                      - paragraph [ref=e915]: Metric ID / UI Pages
+                      - button "Opens editor for field Metric ID / UI Pages" [ref=e916]: Branding
+                    - generic [ref=e917]:
+                      - paragraph [ref=e918]: Defect Short Description
+                      - paragraph [ref=e919]: UI - Global Components - Embed typography files
+                    - generic [ref=e920]:
+                      - paragraph [ref=e921]: Status
+                      - button "Opens editor for field Status" [ref=e922]:
+                        - generic [ref=e925]: Under Review
+                  - generic "Press enter to edit item and press space to toggle item selection"
+                - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1831 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description UI – Global Components – Table text wrapping Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e926] [cursor=pointer]:
+                  - generic [ref=e927]:
+                    - checkbox " "
+                    - generic [ref=e928]:
+                      - generic [ref=e929]: 
+                      - generic [ref=e930]: 
+                  - generic [ref=e934]:
+                    - generic [ref=e935]:
+                      - paragraph [ref=e936]: Assigned To
+                      - generic [ref=e937]:
+                        - paragraph
+                        - img "Joshua Pascual" [ref=e939]
+                        - generic [ref=e940]: Joshua Pascual
+                    - generic [ref=e941]:
+                      - paragraph [ref=e942]: ID
+                      - heading "1831" [level=3] [ref=e943]
+                    - generic [ref=e944]:
+                      - paragraph [ref=e945]: Metric ID / UI Pages
+                      - button "Opens editor for field Metric ID / UI Pages" [ref=e946]: Branding
+                    - generic [ref=e947]:
+                      - paragraph [ref=e948]: Defect Short Description
+                      - paragraph [ref=e949]: UI – Global Components – Table text wrapping
+                    - generic [ref=e950]:
+                      - paragraph [ref=e951]: Status
+                      - button "Opens editor for field Status" [ref=e952]:
+                        - generic [ref=e955]: Under Review
+                  - generic "Press enter to edit item and press space to toggle item selection"
+                - gridcell "  Assigned To Joshua Pascual Joshua Pascual ID 1832 Metric ID / UI Pages Opens editor for field Metric ID / UI Pages Defect Short Description UI – Global Components – Sorting Status Opens editor for field Status Press enter to edit item and press space to toggle item selection" [ref=e956] [cursor=pointer]:
+                  - generic [ref=e957]:
+                    - checkbox " "
+                    - generic [ref=e958]:
+                      - generic [ref=e959]: 
+                      - generic [ref=e960]: 
+                  - generic [ref=e964]:
+                    - generic [ref=e965]:
+                      - paragraph [ref=e966]: Assigned To
+                      - generic [ref=e967]:
+                        - paragraph
+                        - img "Joshua Pascual" [ref=e969]
+                        - generic [ref=e970]: Joshua Pascual
+                    - generic [ref=e971]:
+                      - paragraph [ref=e972]: ID
+                      - heading "1832" [level=3] [ref=e973]
+                    - generic [ref=e974]:
+                      - paragraph [ref=e975]: Metric ID / UI Pages
+                      - button "Opens editor for field Metric ID / UI Pages" [ref=e976]: Branding
+                    - generic [ref=e977]:
+                      - paragraph [ref=e978]: Defect Short Description
+                      - paragraph [ref=e979]: UI – Global Components – Sorting
+                    - generic [ref=e980]:
+                      - paragraph [ref=e981]: Status
+                      - button "Opens editor for field Status" [ref=e982]:
+                        - generic [ref=e985]: Under Review
+                  - generic "Press enter to edit item and press space to toggle item selection"
